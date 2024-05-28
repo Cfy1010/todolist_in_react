@@ -1,12 +1,15 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <h1>Set up</h1>
+      <h1>Todo list</h1>
+      <div>
+        <input type="text" placeholder="tâche..." />
+        <button>Ajoute une tâche</button>
+        <hr />
+      </div>
     </>
   );
 }
