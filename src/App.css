@@ -30,3 +30,8 @@ li {
   font-size: 1.3rem;
   padding-top: 10px;
 }
+
+#task {
+  display: flex;
+  align-items: center;
+}

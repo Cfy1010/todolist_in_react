@@ -36,7 +36,12 @@ function App() {
         <hr />
         <ul>
           {todoList.map((val, key) => {
-            return <li key={key}>{val}</li>;
+            return (
+              <div id="task">
+                <li key={key}>{val}</li>
+                <button>Supprimer</button>
+              </div>
+            );
           })}
         </ul>
       </div>
