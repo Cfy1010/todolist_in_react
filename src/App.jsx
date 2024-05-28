@@ -1,12 +1,17 @@
 import { useState } from "react";
 import "./App.css";
+import { useRef } from "react";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [currentTask, setCurrentTask] = useState("");
 
+  const inputTask = useRef(null);
+
   const addTask = () => {
     setTodoList([...todoList, currentTask]);
+    inputTask.current.value = "";
+    setCurrentTask("");
   };
 
   return (
@@ -14,6 +19,7 @@ function App() {
       <h1>Todo list</h1>
       <div>
         <input
+          ref={inputTask}
           type="text"
           placeholder="tâche..."
           onChange={(e) => {
