@@ -9,7 +9,7 @@ function App() {
   const inputTask = useRef(null);
 
   const addTask = () => {
-    setTodoList([...todoList, currentTask]);
+    setTodoList([...todoList, { task: currentTask, completed: false }]);
     inputTask.current.value = "";
     setCurrentTask("");
   };
@@ -17,7 +17,16 @@ function App() {
   const deleteTask = (taskToDelete) => {
     setTodoList(
       todoList.filter((task) => {
-        return task !== taskToDelete;
+        return task.task !== taskToDelete;
+      })
+    );
+  };
+  const completeTask = (taskToComplete) => {
+    setTodoList(
+      todoList.map((task) => {
+        return task.task == taskToComplete
+          ? { task: taskToComplete, completed: true }
+          : { task: task.task, completed: task.completed ? true : false };
       })
     );
   };
@@ -46,14 +55,26 @@ function App() {
           {todoList.map((val, key) => {
             return (
               <div id="task">
-                <li key={key}>{val}</li>
+                <li key={key}>{val.task}</li>
                 <button
                   onClick={() => {
-                    deleteTask(val);
+                    completeTask(val.task);
+                  }}
+                >
+                  Fait
+                </button>
+                <button
+                  onClick={() => {
+                    deleteTask(val.task);
                   }}
                 >
                   Supprimer
                 </button>
+                {val.completed ? (
+                  <h1>Tâche complete</h1>
+                ) : (
+                  <h1>Tâche non complete</h1>
+                )}
               </div>
             );
           })}
