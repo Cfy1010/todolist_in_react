@@ -29,7 +29,11 @@ function App() {
           Ajoute une tâche
         </button>
         <hr />
-        <ul>{/* <li>{currentTask}</li> */}</ul>
+        <ul>
+          {todoList.map((val, key) => {
+            return <li key={key}>{val}</li>;
+          })}
+        </ul>
       </div>
     </>
   );
