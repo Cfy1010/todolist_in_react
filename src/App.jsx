@@ -39,6 +39,9 @@ function App() {
           ref={inputTask}
           type="text"
           placeholder="tâche..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") addTask();
+          }}
           onChange={(e) => {
             setCurrentTask(e.target.value);
           }}
@@ -71,9 +74,9 @@ function App() {
                   Supprimer
                 </button>
                 {val.completed ? (
-                  <h1>Tâche complete</h1>
+                  <h3>Tâche complete</h3>
                 ) : (
-                  <h1>Tâche non complete</h1>
+                  <h3>Tâche non complete</h3>
                 )}
               </div>
             );
