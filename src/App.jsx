@@ -7,7 +7,6 @@ function App() {
 
   const addTask = () => {
     setTodoList([...todoList, currentTask]);
-    console.log(todoList);
   };
 
   return (
