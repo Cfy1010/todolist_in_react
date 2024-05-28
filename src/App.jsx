@@ -14,6 +14,14 @@ function App() {
     setCurrentTask("");
   };
 
+  const deleteTask = (taskToDelete) => {
+    setTodoList(
+      todoList.filter((task) => {
+        return task !== taskToDelete;
+      })
+    );
+  };
+
   return (
     <>
       <h1>Todo list</h1>
@@ -39,7 +47,13 @@ function App() {
             return (
               <div id="task">
                 <li key={key}>{val}</li>
-                <button>Supprimer</button>
+                <button
+                  onClick={() => {
+                    deleteTask(val);
+                  }}
+                >
+                  Supprimer
+                </button>
               </div>
             );
           })}
