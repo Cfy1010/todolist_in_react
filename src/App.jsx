@@ -5,29 +5,29 @@ import { useRef } from "react";
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [currentTask, setCurrentTask] = useState("");
-
-  const inputTask = useRef(null);
+  const inputRef = useRef(null);
 
   const addTask = () => {
-    setTodoList([...todoList, { task: currentTask, completed: false }]);
-    inputTask.current.value = "";
+    setTodoList((prevTodoList) => [
+      ...prevTodoList,
+      { task: currentTask, completed: false },
+    ]);
+    inputRef.current.value = "";
     setCurrentTask("");
   };
 
   const deleteTask = (taskToDelete) => {
-    setTodoList(
-      todoList.filter((task) => {
-        return task.task !== taskToDelete;
-      })
+    setTodoList((prevTodoList) =>
+      prevTodoList.filter((task) => task.task !== taskToDelete)
     );
   };
   const completeTask = (taskToComplete) => {
-    setTodoList(
-      todoList.map((task) => {
-        return task.task == taskToComplete
-          ? { task: taskToComplete, completed: true }
-          : { task: task.task, completed: task.completed ? true : false };
-      })
+    setTodoList((prevTodoList) =>
+      prevTodoList.map((task) =>
+        task.task == taskToComplete
+          ? { ...task, completed: true }
+          : { ...task, completed: task.completed }
+      )
     );
   };
 
@@ -36,7 +36,7 @@ function App() {
       <h1>Todo list</h1>
       <div>
         <input
-          ref={inputTask}
+          ref={inputRef}
           type="text"
           placeholder="tâche..."
           onKeyDown={(e) => {
@@ -55,32 +55,30 @@ function App() {
         </button>
         <hr />
         <ul>
-          {todoList.map((val, key) => {
-            return (
-              <div id="task">
-                <li key={key}>{val.task}</li>
-                <button
-                  onClick={() => {
-                    completeTask(val.task);
-                  }}
-                >
-                  Fait
-                </button>
-                <button
-                  onClick={() => {
-                    deleteTask(val.task);
-                  }}
-                >
-                  Supprimer
-                </button>
-                {val.completed ? (
-                  <h3>Tâche complete</h3>
-                ) : (
-                  <h3>Tâche non complete</h3>
-                )}
-              </div>
-            );
-          })}
+          {todoList.map((val) => (
+            <div key={val.task} id="task">
+              <li>{val.task}</li>
+              <button
+                onClick={() => {
+                  completeTask(val.task);
+                }}
+              >
+                Fait
+              </button>
+              <button
+                onClick={() => {
+                  deleteTask(val.task);
+                }}
+              >
+                Supprimer
+              </button>
+              {val.completed ? (
+                <h3>Tâche complete</h3>
+              ) : (
+                <h3>Tâche non complete</h3>
+              )}
+            </div>
+          ))}
         </ul>
       </div>
     </>
