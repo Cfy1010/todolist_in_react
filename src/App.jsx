@@ -1,27 +1,30 @@
 import { useState } from "react";
 import "./App.css";
 import { useRef } from "react";
+import { useCallback } from "react";
 
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [currentTask, setCurrentTask] = useState("");
   const inputRef = useRef(null);
 
-  const addTask = () => {
+  // Wrap des fonctions de gestion des events  avec  useCallback pour eviter les rerenders non necessaires
+  const addTask = useCallback(() => {
     setTodoList((prevTodoList) => [
       ...prevTodoList,
       { task: currentTask, completed: false },
     ]);
     inputRef.current.value = "";
     setCurrentTask("");
-  };
+  }, [currentTask]);
 
-  const deleteTask = (taskToDelete) => {
+  const deleteTask = useCallback((taskToDelete) => {
     setTodoList((prevTodoList) =>
       prevTodoList.filter((task) => task.task !== taskToDelete)
     );
-  };
-  const completeTask = (taskToComplete) => {
+  }, []);
+
+  const completeTask = useCallback((taskToComplete) => {
     setTodoList((prevTodoList) =>
       prevTodoList.map((task) =>
         task.task == taskToComplete
@@ -29,7 +32,7 @@ function App() {
           : { ...task, completed: task.completed }
       )
     );
-  };
+  }, []);
 
   return (
     <>
